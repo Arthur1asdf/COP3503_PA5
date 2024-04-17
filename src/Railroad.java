@@ -7,7 +7,11 @@ import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.io.BufferedReader;
+import java.util.Comparator;
+import java.util.Collections;
+import java.util.List; 
 
 
 class Edge
@@ -25,6 +29,10 @@ class Edge
     public String toString() {
         return src + "---" + dest + "\t$" + weight;
      }
+    public int getWeight()
+    {
+        return weight;
+    }
 
 }
 class DisjointSetImproved
@@ -123,9 +131,9 @@ public class Railroad {
                         //changing our cost from string to int
                         int weight = Integer.parseInt(tempWeight);
                         //adds the edge to our set
-                        sets.add(new Edge(src, dest, weight));
-                        System.out.println("This is var:" + src + " " + dest + " " + weight);
-                        System.out.println(sets.size() + " " + sets.toString());
+                        sets.add(sortLexi(new Edge(src, dest, weight)));
+                        //System.out.println("This is var:" + src + " " + dest + " " + weight);
+                        //System.out.println(sets.size() + " " + sets.toString());
                         
                     }
                     lineScanner.close();
@@ -139,19 +147,36 @@ public class Railroad {
             e.printStackTrace();
         }
     }
+    //to sort the destinations lexiconacally 
+    public Edge sortLexi(Edge singleEdge) {
+        // comparing to see if the dest is greather than src
+        if (singleEdge.src.compareTo(singleEdge.dest) > 0) {
+           // create a new edge with dest and src flipped like the sample outputs
+           Edge newEdge = new Edge(singleEdge.dest, singleEdge.src, singleEdge.weight);
+  
+           return newEdge;
+        }
+        //return entered parameter if we don't need to swap
+        return singleEdge;
+     }
     //numOfTracks is the number of lines in each text file
     //allPossible tracks take in the txt file for the tracks
-    //Do file i/o for txt files and test if file i/o works and store in string array
     public Railroad(int numOfTracks, String fileOfAllPossibleTracks)
     {
         this.numOfTracks = numOfTracks;
         this.fileOfAllPossibleTracks = fileOfAllPossibleTracks;
         sets = new ArrayList<Edge>();
     }
+    
     public String buildRailroad()
     {
         //System.out.println(src + "---" + dest + "\t$" + resultingtracks[i].weight + "\n");
         readFile();
+        Collections.sort(sets, Comparator.comparingInt(Edge ::getWeight));
+        for (Edge gooning : sets)
+        {
+            System.out.println(sets.toString());
+        }
         return ".";
     }
 }
