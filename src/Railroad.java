@@ -1,4 +1,4 @@
-/* Johnny Knights
+/* Arthur Teng
  * Dr. Steinberg
  * COP3503 Spring 2024
  * Programming Assignment 5
@@ -207,7 +207,7 @@ public class Railroad {
                 totalCost += sets.get(i).weight;
                 dus.union(srcParent, destParent);
                 edgeCount++;
-                System.out.println(sets.get(i).src + "---" + sets.get(i).dest + "\t$" + sets.get(i).weight + "\n");
+                System.out.print(sets.get(i).src + "---" + sets.get(i).dest + "\t$" + sets.get(i).weight + "\n");
                 // Only need vertexCount - 1 edges
                 if (edgeCount == vertexes.size() - 1) break;
             }
